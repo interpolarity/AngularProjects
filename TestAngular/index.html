@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='mainApp'>
+<head>
+	<meta charset="UTF-8">
+	<title>TestAngular</title>
+	<script src="scripts/angular.min.js"></script>
+	<script src="scripts/main.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price Per Item</th>
+				<th>Total</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody ng-controller="billDisplay as disp">
+			<tr ng-repeat= "billItem in disp.billItems">
+				<td>{{billItem.name}}</td>
+				<td>{{billItem.quantity}}</td>
+				<td>{{billItem.pricePerItem}}</td>
+				<td>{{billItem.totalPrice}}</td>
+				<td><button ng-click="disp.delete(billItem)">Delete</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<h2 class = 'text-center'>Add Items</h2>
+	<form role="form" ng-controller='formController as formCtrl' ng-init="singlePrice=true" ng-submit ="formCtrl.addItem()">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" ng-model = "formCtrl.billItem.name">
+			<label for="quantity">Quantity</label>
+			<input type="number" name="quantity" id="quantity" ng-model = "formCtrl.billItem.quantity">
+		</div>
+		
+		<div class='form-group'>
+			<label for="pricePerItem">Price Per Item</label>
+			<input type="number" name="pricePerItem" id="pricePerItem" ng-model = "formCtrl.billItem.pricePerItem" ng-disabled="!singlePrice">
+			<label for="totalPrice">Total</label>
+			<input type="number" name="totalPrice" id="totalPrice" ng-model = "formCtrl.billItem.totalPrice" ng-disabled="singlePrice">
+		</div>
+			<label for="singlePrice">Single Price</label>
+				<input type="radio" class='radio' name ="priceRadio" id = "singlePrice" ng-value = "true" ng-model="singlePrice">
+			<label for="lumpPrice">Lump Price</label>
+				<input type="radio" class='radio' name ="priceRadio" id = "lumpPrice" ng-value= "false" ng-model="singlePrice">
+		<button type="submit">Submit</button>
+	</form>
+</body>
+</html>
